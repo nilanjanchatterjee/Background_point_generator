@@ -1,0 +1,68 @@
+{
+  "settings": [
+	{
+      "id": "type",
+      "name": "Type of method for background point generation",
+      "description": "Specify how you want to perform the resource selction analysis. Type population will geenrate thebackground point for the whole area used by the individuals and type individual will generate background points based on the range of individuals",
+      "defaultValue": population,
+      "type": "character"
+    },
+	{
+      "id": "points",
+      "name": "Ratio of used versus background points",
+      "description": "Provide the ratio of the used versus background points that you want to use for resource selection analysis",
+      "defaultValue": 72,
+      "type": "DOUBLE"
+    }
+    ],
+    
+  "dependencies": {
+    "R": [
+      {
+        "name": "adehabitatHR"
+      },
+	  {
+        "name": "move"
+      },
+      {
+        "name": "sp"
+      },
+	  {
+        "name": "sf"
+      }
+    ]
+  },
+  "createsArtifacts": true,
+  "license": {
+    "key": "MIT"
+  },
+  "language": "eng",
+  "keywords": [
+    "point generation",
+    "random point",
+    "spatial sampling",
+    "resource selection",
+    "animal movement"
+  ],
+  "people": [
+    {
+      "firstName": "Nilanjan",
+      "middleInitials": null,
+      "lastName": "Chatterjee",
+      "email": "nchatter@umn.edu",
+      "roles": ["author", "creator"],
+      "orcid": "0000-0002-7932-0191",
+      "affiliation": "University of Minnesota",
+      "affiliationRor": ""
+    }
+		
+  ],
+  "funding": [
+    {
+	"name": "NASA MoveApps Project"
+	}
+  ],
+  "documentation" : {
+    "url": "https://github.com/nilanjanchatterjee/Background_point_generator/blob/main/README.md"
+  }
+}
