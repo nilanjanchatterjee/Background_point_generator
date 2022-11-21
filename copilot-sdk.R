@@ -2,14 +2,19 @@ library(jsonlite)
 library(move)
 
 source("logger.R")
-source("rfunction.R")
+source("rFunction.R")
 
 #inputFileName = "Input_wolves_latham.rds"
 inputFileName = "input.rds"
 outputFileName = "output.rds"
 
 args<-list()
+#################################################################
+########################### Arguments ###########################
 
+args[["type"]] <- "population"
+args[["points"]] <- 5
+#args[["buffer"]]<-NULL
 #################################################################
 #################################################################
 
