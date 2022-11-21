@@ -22,7 +22,7 @@ rFunction <-function(data, type, points =10, buffer )
   else 
   {
     data1 <- as.data.frame(moveStack(data[[which(n.locs(data)>=5)]]))
-    data_fltr <- data1[, c("tag_local_identifier", "location_lat", "location_long")]
+    data_fltr <- data1[, c("trackId", "location_lat", "location_long", "timestamp")]
     #data_fltr$id <-data_fltr$trackId
     
     indv_pnt_cmbnd <-list()
