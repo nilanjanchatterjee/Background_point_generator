@@ -4,8 +4,8 @@
       "id": "type",
       "name": "Type of method for background point generation",
       "description": "Specify how you want to perform the resource selction analysis. Type population will geenrate thebackground point for the whole area used by the individuals and type individual will generate background points based on the range of individuals",
-      "defaultValue": population,
-      "type": "character"
+      "defaultValue": "population",
+      "type": "STRING"
     },
 	{
       "id": "points",
