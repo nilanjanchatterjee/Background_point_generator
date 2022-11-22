@@ -11,7 +11,7 @@
       "id": "points",
       "name": "Ratio of used versus background points",
       "description": "Provide the ratio of the used versus background points that you want to use for resource selection analysis",
-      "defaultValue": 72,
+      "defaultValue": 10,
       "type": "DOUBLE"
     }
     ],
