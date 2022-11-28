@@ -43,6 +43,7 @@ rFunction <-function(data, type, points =10, buffer )
     final_dat <- do.call(rbind, indv_pnt_cmbnd)
   }
   
+  final_dat <- final_dat[order(final_dat$trackId, final_dat$timestamp), ]
   final_dat_move <-move(x= as.numeric(final_dat$location.long), y= as.numeric(final_dat$location.lat), 
                         time=as.POSIXct(final_dat$timestamp,format="%Y-%m-%d %H:%M:%S"), 
                         data=final_dat, proj=CRS("+proj=longlat +ellps=WGS84"),
