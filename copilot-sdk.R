@@ -4,7 +4,7 @@ library(move)
 source("logger.R")
 source("rFunction.R")
 
-#inputFileName = "Input_wolves_latham.rds"
+#inputFileName = "Latham_wolves.rds"
 inputFileName = "input.rds"
 outputFileName = "output.rds"
 
