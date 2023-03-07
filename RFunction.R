@@ -13,10 +13,20 @@ rFunction <-function(data, type, points =10, buffer )
   #data <- data[!is.na(data$location_lat) & !is.na(data$location_long),]
   data_df <-as.data.frame(data)
   
+  mcpsf <- function(x, percent=95){
+    datsf <-st_as_sf(x, coords=c("location.long", "location.lat"), crs=4326 )
+    centroid <- sf::st_centroid(sf::st_union(datsf))
+    dist <- as.numeric(sf::st_distance(datsf, centroid))
+    within_percentile_range <- dist <= quantile(dist, percent/100)
+    x_filter <- st_union(datsf[within_percentile_range,])
+    st_convex_hull(x_filter)
+  }
+  
   if (type == "population"){
-    pop_hr_mcp<- mcp(data, percent=100)
-    pop_rand_pnt <- spsample(pop_hr_mcp, n= nrow(data)*points, "random")
-    final_dat <-as.data.frame(rbind(coordinates(data), coordinates(pop_rand_pnt)))
+    pop_hr_mcp<- mcpsf(data, percent=100)
+    #pop_rand_pnt <- spsample(pop_hr_mcp, n= nrow(data)*points, "random")
+    pop_rand_pnt <- st_sample(pop_hr_mcp, size = nrow(data)*points, type = "random")
+    final_dat <-as.data.frame(rbind(coordinates(data), st_coordinates(pop_rand_pnt)))
     final_dat$case <-rep(c(1,0), c(nrow(data),length(pop_rand_pnt)))
     #final_dat$timestamp <-rep(data$timestamp, (points+1))
     final_dat$timestamp <-seq(from= min(data$timestamp, na.rm = T),to=  max(data$timestamp, na.rm=T), 
@@ -35,9 +45,10 @@ rFunction <-function(data, type, points =10, buffer )
     {
             indv_data_fltr <- data_fltr[data_fltr$trackId==uid[i],]
             coordinates(indv_data_fltr) <-c("location.long", "location.lat")
-            indv_hr_mcp <- mcp(indv_data_fltr, percent = 100)
-            indv_rand_pnt <- spsample(indv_hr_mcp, n= nrow(indv_data_fltr)*points, "random")
-            indv_pnt_sep <-as.data.frame(rbind(coordinates(indv_data_fltr), coordinates(indv_rand_pnt)))
+            indv_hr_mcp <- mcpsf(indv_data_fltr, percent = 100)
+            #indv_rand_pnt <- spsample(indv_hr_mcp, n= nrow(indv_data_fltr)*points, "random")
+            indv_rand_pnt <- st_sample(indv_hr_mcp, size= nrow(indv_data_fltr)*points, type = "random")
+            indv_pnt_sep <-as.data.frame(rbind(coordinates(indv_data_fltr), st_coordinates(indv_rand_pnt)))
             indv_pnt_sep$case <-rep(c(1,0), c(length(indv_data_fltr),length(indv_rand_pnt)))
             #indv_pnt_sep$timestamp <-rep(indv_data_fltr$timestamp, (points+1))
             indv_pnt_sep$timestamp <- seq(from= min(indv_data_fltr$timestamp, na.rm = T),to=  max(indv_data_fltr$timestamp, na.rm=T), 
