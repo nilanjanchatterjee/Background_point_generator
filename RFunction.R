@@ -43,7 +43,7 @@ rFunction <-function(data, type, points =10, background_area="mcp")
     indv_pnt_cmbnd <-list()
     uid <-unique(data_fltr$trackId)
     for(i in 1:length(uid))
-    {
+    {#
             indv_data_fltr <- data_fltr[data_fltr$trackId==uid[i],]
             coordinates(indv_data_fltr) <-c("location.long", "location.lat")
             indv_dat_sf <-st_as_sf(indv_data_fltr, coords=c("location.long", "location.lat"), crs=4326)
@@ -62,17 +62,20 @@ rFunction <-function(data, type, points =10, background_area="mcp")
     final_dat <- do.call(rbind, indv_pnt_cmbnd)
   }
   
-  final_dat <- final_dat[order(final_dat$trackId, final_dat$timestamp), ]
+  final_dat <- final_dat[order( final_dat$trackId, final_dat$timestamp,final_dat$case ), ]
+  ### ORder based on the case also 
   colnames(final_dat)[1:2] <-c("location.long", "location.lat")
   
   ### plot the presence and random points to check
   plot <-ggplot(final_dat, aes(x= location.long, y= location.lat))+
-   geom_point(aes(col= as.factor(case)), alpha=0.5)+
+   geom_point(aes(col= as.factor(case)), alpha=0.9)+
     labs(x= "Longitude", y= "Latitude", col ="Data type")+
+    scale_color_discrete(labels=c( "Available",  "Used "))+
+    ## change the name of the label
     theme_bw()
   
-  ggsave(plot, #file= "Presence_random_locations.jpeg",
-         file = paste0(Sys.getenv(x = "APP_ARTIFACTS_DIR", "/tmp/"),"Presence_random_locations.jpeg"),
+  ggsave(plot, file= "Presence_random_locations.jpeg",
+         #file = paste0(Sys.getenv(x = "APP_ARTIFACTS_DIR", "/tmp/"),"Presence_random_locations.jpeg"),
          width=10, height=8, dpi=200, units= "in")
   
   
