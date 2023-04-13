@@ -74,8 +74,8 @@ rFunction <-function(data, type, points =10, background_area="mcp")
     ## change the name of the label
     theme_bw()
   
-  ggsave(plot, file= "Presence_random_locations.jpeg",
-         #file = paste0(Sys.getenv(x = "APP_ARTIFACTS_DIR", "/tmp/"),"Presence_random_locations.jpeg"),
+  ggsave(plot, #file= "Presence_random_locations.jpeg",
+         file = paste0(Sys.getenv(x = "APP_ARTIFACTS_DIR", "/tmp/"),"Presence_random_locations.jpeg"),
          width=10, height=8, dpi=200, units= "in")
   
   
