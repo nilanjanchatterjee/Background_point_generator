@@ -13,19 +13,23 @@
       "description": "Provide the ratio of the used versus background points that you want to use for resource selection analysis",
       "defaultValue": 10,
       "type": "DOUBLE"
+    },
+    {
+      "id": "background_bbox",
+      "name": "Type of method for availability point generation",
+      "description": "Specify how you want to generate available points the resource selction analysis. background_bbox TRUE will generate the background point for the whole bounding box rectangle area used by the individuals and background_bbox FALSE will generate the background point for the Minimum convex polygon (MCP)",
+      "defaultValue": "FALSE",
+      "type": "STRING"
     }
     ],
     
   "dependencies": {
     "R": [
       {
-        "name": "adehabitatHR"
+        "name": "dplyr"
       },
 	  {
-        "name": "move"
-      },
-      {
-        "name": "sp"
+        "name": "move2"
       },
 	  {
         "name": "sf"

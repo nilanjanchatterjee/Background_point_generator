@@ -1,12 +1,15 @@
-library(jsonlite)
-library(move)
+##################
+## input/output ## adjust!
+##################
+## Provided testing datasets in `./data/raw`: 
+## for own data: file saved as a .rds containing a object of class MoveStack
+inputFileName = "./data/raw/Yahatinda_move2.rds" 
 
-source("logger.R")
-source("rFunction.R")
+## optionally change the output file name
+unlink("./data/output/", recursive = TRUE) # delete "output" folder if it exists, to have a clean start for every run
+dir.create("./data/output/") # create a new output folder
+outputFileName = "./data/output/output.rds" 
 
-#inputFileName = "Latham_wolves.rds"
-inputFileName = "input.rds"
-outputFileName = "output.rds"
 
 args<-list()
 #################################################################
@@ -14,53 +17,25 @@ args<-list()
 
 args[["type"]] <- "population"
 args[["points"]] <- 10
+args[["background_bbox"]] <- "FALSE"
 #args[["buffer"]]<-NULL
 #################################################################
 #################################################################
 
-readInput <- function(sourceFile) {
-  input <- NULL
-  if(!is.null(sourceFile) && sourceFile != "") {
-    logger.debug("Loading file from %s", sourceFile)
-    input <- tryCatch({
-      # 1: try to read input as move RDS file
-      readRDS(file = sourceFile)
-    },
-    error = function(readRdsError) {
-      tryCatch({
-        # 2 (fallback): try to read input as move CSV file
-        move(sourceFile, removeDuplicatedTimestamps=TRUE)
-      },
-      error = function(readCsvError) {
-        # collect errors for report and throw custom error
-        stop(paste(sourceFile, " -> readRDS(sourceFile): ", readRdsError, "move(sourceFile): ", readCsvError, sep = ""))
-      })
-    })
-  } else {
-    logger.debug("Skip loading: no source File")
-  }
-  
-  input
-}
+##############################
+## source, setup & simulate ## leave as is!
+##############################
+# this file is the home of your app code and will be bundled into the final app on MoveApps
+source("RFunction.R")
 
-inputData <- readInput(inputFileName)
-# Add the data parameter if input data is available
-if (!is.null(inputData)) {
-  args[["data"]] <- inputData
-}
-
-result <- tryCatch({
-  do.call(rFunction, args)
-},
-error = function(e) {
-  logger.error(paste("ERROR:", e))
-  stop(e) # re-throw the exception
-}
+# setup your environment
+Sys.setenv(
+  SOURCE_FILE = inputFileName, 
+  OUTPUT_FILE = outputFileName, 
+  ERROR_FILE="./data/output/error.log", 
+  APP_ARTIFACTS_DIR ="./data/output/"
 )
 
-if(!is.null(outputFileName) && outputFileName != "" && !is.null(result)) {
-  logger.info(paste("Storing file to '", outputFileName, "'", sep = ""))
-  save(result, file = outputFileName)
-} else {
-  logger.warn("Skip store result: no output File or result is missing.")
-}
+# simulate running your app on MoveApps
+source("src/moveapps.R")
+simulateMoveAppsRun(args)
