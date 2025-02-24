@@ -1,6 +1,5 @@
 {
-    "variab": "individual_name_deployment_id",
-    "rel": "%in%",
-    "valu": "X742..deploy_id.56853924.,X746..deploy_id.20813885.",
-    "time": false
+    "scale": "individual",
+    "extent_type": "mcp",
+    "points_ratio": 30
 }

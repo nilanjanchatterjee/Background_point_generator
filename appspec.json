@@ -2,7 +2,7 @@
   "settings": [{
       "id": "scale",
       "name": "Scale",
-      "description": "Specify how you want to perform the resource selction function. Population will generate the background point for the whole area used by the individuals and Individual will generate background points based on the range of individuals",
+      "description": "Specify how you want to perform the resource selection function. Population will generate the background point for the whole area used by the individuals and Individual will generate background points based on the range of individuals.",
       "defaultValue": "population",
       "type": "RADIOBUTTONS",
       "options": [
@@ -19,14 +19,14 @@
 	{
       "id": "points",
       "name": "Ratio of used versus background points",
-      "description": "Provide the ratio of the used versus background points that you want to use for the resource selection function",
+      "description": "Provide the ratio of the used versus background points that you want to use for the resource selection function.",
       "defaultValue": 10,
       "type": "DOUBLE"
     },
     {
       "id": "extent_type",
       "name": "Extent Type",
-      "description": "Specify where you want to generate background points for the resource selction function. Bounding Box will generate the background points for the whole bounding box rectangle area used by the individuals/population and Minimum convex polygon (MCP) will generate the background points in the MCP used by the individuals/population",
+      "description": "Specify where you want to generate background points for the resource selction function. Bounding Box will generate the background points for the whole bounding box rectangle area used by the individuals/population and Minimum Convex Polygon (MCP) will generate the background points in the MCP used by the individuals/population.",
       "defaultValue": "bbox",
       "type": "RADIOBUTTONS",
       "options": [

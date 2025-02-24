@@ -18,7 +18,7 @@ get_extent <- function(observed_move_data, extent_type, percent = 100) {
     filtered_data <- st_union(observed_move_data[within_percentile_range, ])
     extent <- st_convex_hull(filtered_data)
   } else {
-    extent <- st_as_sfc(st_bbox(observed_move_data))
+    extent <- st_bbox(observed_move_data)
   }
 
   return(extent)
@@ -26,10 +26,10 @@ get_extent <- function(observed_move_data, extent_type, percent = 100) {
 
 
 get_background_points_df <- function(extent, track_id_column,
-                                     observed_move_data, points, type = "random") {
+                                     observed_move_data, points_ratio, type = "random") {
   # generate background points
   background_points_df <- st_sample(extent,
-    size = nrow(observed_move_data) * points,
+    size = nrow(observed_move_data) * points_ratio,
     type = type
   ) |>
     st_coordinates() |>
@@ -57,7 +57,7 @@ get_background_points_df <- function(extent, track_id_column,
         to = max(observed_move_data$timestamp, na.rm = T),
         length.out = n()
       ),
-      !!track_id_column := rep(mt_track_id(observed_move_data), points + 1)
+      !!track_id_column := rep(mt_track_id(observed_move_data), points_ratio + 1)
     )
 
 
@@ -66,7 +66,7 @@ get_background_points_df <- function(extent, track_id_column,
 
 
 
-rFunction <- function(data, scale, points, extent_type) {
+rFunction <- function(data, scale, points_ratio, extent_type) {
   original_track_id_column <- mt_track_id_column(data)
   track_attribute_data <- mt_track_data(data)
 
@@ -76,7 +76,7 @@ rFunction <- function(data, scale, points, extent_type) {
       extent = extent,
       track_id_column = original_track_id_column,
       observed_move_data = data,
-      points = points
+      points_ratio = points_ratio
     )
   } else {
     filtered_data <- data |>
@@ -101,7 +101,7 @@ rFunction <- function(data, scale, points, extent_type) {
         extent = extent,
         track_id_column = original_track_id_column,
         observed_move_data = individual_data,
-        points = points
+        points_ratio = points_ratio
       )
 
       track_list[[i]] <- background_point_df
@@ -134,7 +134,7 @@ rFunction <- function(data, scale, points, extent_type) {
     }
 
     ggsave(plot,
-      file = paste0(Sys.getenv(x = "APP_ARTIFACTS_DIR", "/tmp/"), "Presence_random_locations.jpeg"),
+      file = paste0(Sys.getenv(x = "APP_ARTIFACTS_DIR", "/tmp/"), "observed_background_points.png"),
       width = 10, height = 8, dpi = 200, units = "in"
     )
   })
