@@ -83,6 +83,19 @@
       "orcid": "0000-0002-7932-0191",
       "affiliation": "University of Minnesota",
       "affiliationRor": ""
+    },
+    {
+      "firstName": "Smith",
+      "middleInitials": null,
+      "lastName": "Freeman",
+      "email": "smithifreeman@gmail.com",
+      "roles": [
+        "author",
+        "creator"
+      ],
+      "orcid": "0009-0008-0430-653X",
+      "affiliation": "University of Minnesota",
+      "affiliationRor": "https://ror.org/03grvy078"
     }
 		
   ],
