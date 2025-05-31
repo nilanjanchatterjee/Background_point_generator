@@ -1,26 +1,45 @@
 {
-  "settings": [
-	{
-      "id": "type",
-      "name": "Type of method for background point generation",
-      "description": "Specify how you want to perform the resource selction analysis. Type population will generate the background point for the whole area used by the individuals and type individual will generate background points based on the range of individuals",
+  "settings": [{
+      "id": "scale",
+      "name": "Scale",
+      "description": "Specify how you want to perform the resource selection function. Population will generate the background point for the whole area used by the individuals and Individual will generate background points based on the range of individuals.",
       "defaultValue": "population",
-      "type": "STRING"
+      "type": "RADIOBUTTONS",
+      "options": [
+        {
+          "value": "population",
+          "displayText": "Population"
+        },
+        {
+          "value": "individual",
+          "displayText": "Individual"
+        }
+      ]
     },
 	{
       "id": "points",
       "name": "Ratio of used versus background points",
-      "description": "Provide the ratio of the used versus background points that you want to use for resource selection analysis",
+      "description": "Provide the ratio of the used versus background points that you want to use for the resource selection function.",
       "defaultValue": 10,
       "type": "DOUBLE"
     },
     {
-      "id": "background_bbox",
-      "name": "Type of method for availability point generation",
-      "description": "Specify how you want to generate available points the resource selction analysis. background_bbox TRUE will generate the background point for the whole bounding box rectangle area used by the individuals and background_bbox FALSE will generate the background point for the Minimum convex polygon (MCP)",
-      "defaultValue": "FALSE",
-      "type": "STRING"
-    }
+      "id": "extent_type",
+      "name": "Extent Type",
+      "description": "Specify where you want to generate background points for the resource selction function. Bounding Box will generate the background points for the whole bounding box rectangle area used by the individuals/population and Minimum Convex Polygon (MCP) will generate the background points in the MCP used by the individuals/population.",
+      "defaultValue": "bbox",
+      "type": "RADIOBUTTONS",
+      "options": [
+        {
+          "value": "bbox",
+          "displayText": "Bounding Box"
+        },
+        {
+          "value": "mcp",
+          "displayText": "Minimum Convex Polygon (MCP)"
+        }
+      ]
+    },
     ],
     
   "dependencies": {
@@ -28,14 +47,17 @@
       {
         "name": "dplyr"
       },
-	  {
+      {
         "name": "move2"
       },
-	  {
+      {
         "name": "sf"
       },
       {
         "name": "ggplot2"
+      },
+      {
+        "name": "data.table"
       }
     ]
   },
@@ -61,6 +83,19 @@
       "orcid": "0000-0002-7932-0191",
       "affiliation": "University of Minnesota",
       "affiliationRor": ""
+    },
+    {
+      "firstName": "Smith",
+      "middleInitials": null,
+      "lastName": "Freeman",
+      "email": "smithifreeman@gmail.com",
+      "roles": [
+        "author",
+        "creator"
+      ],
+      "orcid": "0009-0008-0430-653X",
+      "affiliation": "University of Minnesota",
+      "affiliationRor": "https://ror.org/03grvy078"
     }
 		
   ],
